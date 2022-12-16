@@ -18,6 +18,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { buildImageUrl } from "utils/api";
+import AddToWatchListButton from "./../../components/AddToWatchlistButton";
 
 const MovieContent = () => {
   const { id } = useRouter().query;
@@ -47,7 +48,7 @@ const MovieContent = () => {
       </Head>
       <Box minW="300px" pos="relative">
         <HStack pos="absolute" zIndex={1} top={2} right={2}>
-          <HistoryButton />
+          <HistoryButton movieId={id} />
         </HStack>
         <Image
           src={buildImageUrl(data.poster_path, "w300")}
@@ -59,6 +60,7 @@ const MovieContent = () => {
           unoptimized
         />
       </Box>
+      <AddToWatchListButton />
       <Stack>
         <HStack justify="space-between">
           <Heading as="h2">{data.title}</Heading>

@@ -13,7 +13,7 @@ import {
   Spacer,
   Stack,
   useDisclosure,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
@@ -33,7 +33,7 @@ function Header() {
   const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=814d059119735875be9188f0a1bf5036&language=en-US`;
   const { data, error, isLoading } = useSWR(url, swrOptions.fetcher);
   return (
-    <Box bg="purple.500">
+    <Box bg="teal.500">
       <Container>
         <Stack
           as="nav"
@@ -44,7 +44,7 @@ function Header() {
         >
           <HStack justify="space-between">
             <MenuItem href="/" mr={8}>
-              <Heading size="lg">Moviebase</Heading>
+              <Heading size="2xl">Moviebase</Heading>
             </MenuItem>
 
             <Box display={["block", , "none"]} onClick={onToggle}>
@@ -62,14 +62,10 @@ function Header() {
             spacing={4}
           >
             <MenuItem href="/search">Search</MenuItem>
-            <MenuItem href="/" disabled>
-              Watchlist
-            </MenuItem>
             <MenuItem href="/upcoming">Upcoming</MenuItem>
-            <MenuItem href="/top-rated">Top rated</MenuItem>
-            <MenuItem href="/" disabled>
-              History
-            </MenuItem>
+            <MenuItem href="/top-rated">Top Rated</MenuItem>
+            <MenuItem href="/history">History</MenuItem>
+            <MenuItem href="/watchlist">Watchlist</MenuItem>
             <Menu>
               <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                 Categories
@@ -89,8 +85,8 @@ function Header() {
           </Stack>
           <Spacer />
           <Box display={[isOpen ? "block" : "none", , "block"]}>
-            <MenuItem href="/" variant="outline" disabled>
-              What to watch
+            <MenuItem href="/what-to-watch" variant="outline">
+              What To Watch Today ?
             </MenuItem>
           </Box>
         </Stack>
@@ -110,7 +106,7 @@ export default function Layout({ title, children }) {
         <VStack w="full" align="stretch" spacing={8}>
           <Header />
           <Box as="main" h="full">
-            {children}
+          <Container>{children}</Container>
           </Box>
         </VStack>
       </Grid>

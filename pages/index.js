@@ -1,23 +1,26 @@
-import { Center } from "@chakra-ui/react";
+import {
+  Center, Heading, SimpleGrid
+} from "@chakra-ui/react";
 import Layout from "components/Layout";
 import MovieCard from "components/MovieCard";
 import useSWR from "swr";
 import { swrOptions } from "utils/api";
 
-const url = `https://api.themoviedb.org/3/movie/popular?api_key=814d059119735875be9188f0a1bf5036&language=en-US&page=1`;
+const url = `/api/popular`;
 
 export default function HomePage() {
   const { data, error, isLoading } = useSWR(url, swrOptions.fetcher);
 
   return (
     <Layout title="Moviebase">
+      <Heading size="xl" mb="1rem" mt="3rem" color="orange.500">Popular movies...</Heading>
       <Center h="full">
-        <ul>
+        <SimpleGrid columns={4} spacing={5} minChildWidth="20%" py={6}>
           {data &&
             data.results.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
-        </ul>
+        </SimpleGrid>
       </Center>
     </Layout>
   );
