@@ -2,13 +2,12 @@ import {
   Badge,
   Box,
   Center,
-  CircularProgress,
-  Container,
-  Heading,
+  CircularProgress, Heading,
   HStack,
   Stack,
   Tag,
   Text,
+  VStack
 } from "@chakra-ui/react";
 import HistoryButton from "components/HistoryButton";
 import Layout from "components/Layout";
@@ -42,7 +41,8 @@ const MovieContent = () => {
     return <Text color="red">{data.status_message}</Text>;
   }
   return (
-    <Stack direction={["column", "row"]} spacing={4}>
+    <VStack>
+    <Stack direction={["column", "row"]} spacing={4} mb="3rem">
       <Head>
         <title>{data.title}</title>
       </Head>
@@ -53,14 +53,12 @@ const MovieContent = () => {
         <Image
           src={buildImageUrl(data.poster_path, "w300")}
           alt="Movie poster"
-          layout="responsive"
           width="300"
           height="450"
-          objectFit="contain"
           unoptimized
         />
+             <AddToWatchListButton />
       </Box>
-      <AddToWatchListButton />
       <Stack>
         <HStack justify="space-between">
           <Heading as="h2">{data.title}</Heading>
@@ -73,25 +71,28 @@ const MovieContent = () => {
         <Box>{data.tagline}</Box>
 
         <Stack direction="row">
-          {data.genres?.map((genre) => (
-            <Badge key={genre.id} colorScheme="purple" variant="outline">
-              {genre.name}
+          {data.genres?.map(genre=>
+              <Badge key={genre.id} colorScheme="purple" variant="outline">
+                 {genre.name}
             </Badge>
-          ))}
+          )}
         </Stack>
         <Box>{data.overview}</Box>
-        <MovieReviews />
       </Stack>
     </Stack>
+    <Stack  direction={["column", "column"]} w="full">
+      <Box w="full">
+       <MovieReviews />
+        </Box>
+      </Stack>
+    </VStack>
   );
 };
 
 export default function Movie() {
   return (
     <Layout>
-      <Container h="full">
-        <MovieContent />
-      </Container>
+       <MovieContent />
     </Layout>
   );
 }

@@ -1,4 +1,4 @@
-import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { ArrowUpIcon, ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -30,7 +30,7 @@ const MenuItem = ({ href, children, ...props }) => (
 
 function Header() {
   const { isOpen, onToggle } = useDisclosure();
-  const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=814d059119735875be9188f0a1bf5036&language=en-US`;
+  const url = `/api/categories`
   const { data, error, isLoading } = useSWR(url, swrOptions.fetcher);
   return (
     <Box bg="teal.500">
@@ -62,6 +62,7 @@ function Header() {
             spacing={4}
           >
             <MenuItem href="/search">Search</MenuItem>
+            <MenuItem href="/popular">Popular</MenuItem>
             <MenuItem href="/upcoming">Upcoming</MenuItem>
             <MenuItem href="/top-rated">Top Rated</MenuItem>
             <MenuItem href="/history">History</MenuItem>
@@ -96,6 +97,9 @@ function Header() {
 }
 
 export default function Layout({ title, children }) {
+  function scrollToTop(){
+    window.scrollTo({top:0})
+  }
   return (
     <>
       <Head>
@@ -110,6 +114,10 @@ export default function Layout({ title, children }) {
           </Box>
         </VStack>
       </Grid>
+      <HStack pos="absolute" zIndex={1} bottom={2} right={2}>
+          <Button onClick={()=>scrollToTop()} position="fixed" bottom="0" right="0">
+          <ArrowUpIcon fontSize="2xl"/></Button>
+        </HStack>
     </>
   );
 }

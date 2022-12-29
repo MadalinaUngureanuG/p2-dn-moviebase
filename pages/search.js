@@ -1,23 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import useSWR from 'swr';
+import { SearchIcon, StarIcon } from '@chakra-ui/icons';
 import {
-  Input,
-  IconButton,
-  Container,
-  UnorderedList,
-  ListItem,
+  Badge, Button, Container, IconButton, Input, InputGroup,
+  InputRightElement, ListItem,
   Progress,
-  Text,
-  InputGroup,
-  InputRightElement,
-  VStack,
-  Button,
-  Badge,
+  Text, UnorderedList, VStack
 } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
 import Layout from 'components/Layout';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 
 function SearchBar() {
   const router = useRouter();
@@ -54,6 +46,7 @@ function SearchBar() {
     </InputGroup>
   );
 }
+
 function SearchResults() {
   const { terms } = useRouter().query;
   const { data, error } = useSWR(terms && `/api/search?terms=${terms}`);
@@ -75,21 +68,21 @@ function SearchResults() {
     return <Text>No results</Text>;
   }
   return (
-    <UnorderedList stylePosition="inside">
-      {data.results.map(({ id, title, release_date }) => (
-        <ListItem key={id}>
-          <Link href={`/movies/${id}`} passHref legacyBehavior>
+    <UnorderedList spacing={2}>
+      {data.results.map(({ id, title, release_date, vote_average}) => (
+        <ListItem key={id} mt="1rem">
+          <Link href={`/movies/${id}`} passHref legacyBehavior >
             <Button
               as="a"
               variant="link"
-              rightIcon={<Badge>{release_date}</Badge>}
+              rightIcon={<Badge fontSize="sm">Rating: {vote_average} <StarIcon color="yellow.600" fontSize="sm" mb="5px"/> </Badge>} 
             >
-              <Text as="span">{title} </Text>
+              <Text as="span" fontSize="2xl" color="teal.400">{title}</Text>
             </Button>
           </Link>
         </ListItem>
       ))}
-    </UnorderedList>
+  </UnorderedList>
   );
 }
 
